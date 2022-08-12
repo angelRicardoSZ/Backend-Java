@@ -1,26 +1,26 @@
+import javax.print.Doc;
+
 import static ui.UiMenu.*;
 
 public class Main {
     public static void main(String[] args) {
 
-        Doctor myDoctor = new Doctor();
 
-        myDoctor.name = "Angel";
+        //showMenu();
 
-        myDoctor.showName();
+        Doctor myDoctor = new Doctor("Angel","specialliy 1");
 
-        myDoctor.showId();
+        System.out.println(myDoctor.name);
 
-        System.out.println(Doctor.id);
+        System.out.println(myDoctor.speciality);
 
-        Doctor myDoctorAngel = new Doctor();
+        Patient patient = new Patient("Patient 1", "w@hotmail.com");
 
-        myDoctorAngel.showId();
+        System.out.println(patient.name);
 
-        System.out.println(Doctor.id);
+        System.out.println(patient.email);
 
 
-        showMenu();
 
 
 
