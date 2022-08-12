@@ -16,9 +16,12 @@ public class Main {
 
         Patient patient = new Patient("Patient 1", "w@hotmail.com");
 
-        System.out.println(patient.name);
 
-        System.out.println(patient.email);
+
+
+
+
+
 
 
 
