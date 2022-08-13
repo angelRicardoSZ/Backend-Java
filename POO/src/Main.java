@@ -24,6 +24,46 @@ public class Main {
 
         System.out.println(patient.getPhoneNumber());
 
+        int i = 0;
+
+        int b = 2;
+
+        b = i;
+
+        // b = 0
+
+        Patient patient3 = new Patient("Patient 3", "w3@hotmail.com");
+
+        Patient patient4 = new Patient("Patient 4", "w4@hotmail.com");
+
+        System.out.println("Patient 3");
+
+        System.out.println(patient3);
+        System.out.println(patient3.getName());
+
+        System.out.println("Patient 4");
+
+        System.out.println(patient4);
+        System.out.println(patient4.getName());
+
+        patient3 = patient4;
+
+        System.out.println("Patient 3 edited");
+
+        System.out.println(patient3);
+        System.out.println(patient3.getName());
+
+        System.out.println("Patient 4 edited");
+
+        System.out.println(patient4);
+        System.out.println(patient4.getName());
+
+        patient4.setName("Patient 4 new name");
+        System.out.println("Patient 4 name edited");
+        System.out.println(patient3.getName());
+        System.out.println(patient4.getName());
+
+
 
 
 
