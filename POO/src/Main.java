@@ -1,5 +1,7 @@
 import javax.print.Doc;
 
+import java.util.Date;
+
 import static ui.UiMenu.*;
 
 public class Main {
@@ -63,6 +65,18 @@ public class Main {
         System.out.println(patient3.getName());
         System.out.println(patient4.getName());
 
+        System.out.println("add appointments");
+
+        myDoctor.addAvailableAppointment(new Date(), "4 pm");
+        myDoctor.addAvailableAppointment(new Date(), "10 am");
+        myDoctor.addAvailableAppointment(new Date(), "1 pm");
+
+        System.out.println(myDoctor.getAvailableAppointments());
+
+        // for-each
+        for (Doctor.AvailableAppointment availableAppointment: myDoctor.availableAppointments) {
+            System.out.println(availableAppointment.getDate() + " - " + availableAppointment.getTime());
+        }
 
 
 
