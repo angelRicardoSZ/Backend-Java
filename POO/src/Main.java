@@ -12,7 +12,7 @@ public class Main {
 
         Doctor myDoctor = new Doctor("Angel","specialliy 1");
 
-        System.out.println(myDoctor.name);
+        System.out.println(myDoctor.getName());
 
         System.out.println(myDoctor.speciality);
 
