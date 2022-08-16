@@ -420,6 +420,150 @@ class Main extends Vehicle {
 1 error)
 ```
 
+## Java Polymorphism
+
+It occurs when we have many classes that are related to each other by inheritance. [**Inheritance**](https://www.w3schools.com/java/java_inheritance.asp) lets us inherit attributes and methods from another class. **Polymorphism** uses those methods to perform different tasks. This allows us to perform a single action in different ways. 
+
+For example, think of a superclass called `Animal` that has a method called `animalSound()`. Subclasses of Animals could be Pigs, Cats, Dogs, Birds - And they also have their own implementation of an animal sound (the pig oinks, and the cat meows, etc.):
+
+```java
+class Animal {
+  public void animalSound() {
+    System.out.println("The animal makes a sound");
+  }
+}
+
+class Pig extends Animal {
+  public void animalSound() {
+    System.out.println("The pig says: wee wee");
+  }
+}
+
+class Dog extends Animal {
+  public void animalSound() {
+    System.out.println("The dog says: bow wow");
+  }
+}
+```
+
+Now we can create `Pig` and `Dog` objects and call the `animalSound()` method on both of them:
+
+```java
+class Animal {
+  public void animalSound() {
+    System.out.println("The animal makes a sound");
+  }
+}
+
+class Pig extends Animal {
+  public void animalSound() {
+    System.out.println("The pig says: wee wee");
+  }
+}
+
+class Dog extends Animal {
+  public void animalSound() {
+    System.out.println("The dog says: bow wow");
+  }
+}
+
+class Main {
+  public static void main(String[] args) {
+    Animal myAnimal = new Animal();  // Create a Animal object
+    Animal myPig = new Pig();  // Create a Pig object
+    Animal myDog = new Dog();  // Create a Dog object
+    myAnimal.animalSound();
+    myPig.animalSound();
+    myDog.animalSound();
+  }
+}
+```
+
+**Types of polymorphism**
+
+In Java polymorphism is mainly divided into two types: 
+
+- Compile-time Polymorphism
+- Runtime Polymorphism
+
+**Type 1:** Compile-time polymorphism
+
+It is also known as static polymorphism. This type of polymorphism is achieved by function overloading or operator overloading. 
+
+**Type 2:** [Runtime polymorphism](https://www.geeksforgeeks.org/dynamic-method-dispatch-runtime-polymorphism-java/)
+
+It is also known as Dynamic Method Dispatch. It is a process in which a function call to the overridden method is resolved at Runtime. This type of polymorphism is achieved by Method Overriding. [**Method overriding**](https://www.geeksforgeeks.org/overriding-in-java/), on the other hand, occurs when a derived class has a definition for one of the member functions of the base class. That base function is said to be **overridden**.
+
+```java
+// Java Program for Method Overriding
+
+// Class 1
+// Helper class
+class Parent {
+
+	// Method of parent class
+	void Print()
+	{
+
+		// Print statement
+		System.out.println("parent class");
+	}
+}
+
+// Class 2
+// Helper class
+class subclass1 extends Parent {
+
+	// Method
+	void Print() { System.out.println("subclass1"); }
+}
+
+// Class 3
+// Helper class
+class subclass2 extends Parent {
+
+	// Method
+	void Print()
+	{
+
+		// Print statement
+		System.out.println("subclass2");
+	}
+}
+
+// Class 4
+// Main class
+class GFG {
+
+	// Main driver method
+	public static void main(String[] args)
+	{
+
+		// Creating object of class 1
+		Parent a;
+
+		// Now we will be calling print methods
+		// inside main() method
+
+		a = new subclass1();
+		a.Print();
+
+		a = new subclass2();
+		a.Print();
+	}
+}
+
+```
+
+output
+
+```
+subclass1
+subclass2
+```
+
+Here in this program, When an object of child class is created, then the method inside the child class is called. This is because The method in the parent class is overridden by the child class. Since The method is overridden, This method has more priority than the parent method inside the child class. So, the body inside the child class is executed.
+
 ## Java Enums
 
 An `enum` is a special "class" that represents a group of **constants** (unchangeable variables, like `final` variables).

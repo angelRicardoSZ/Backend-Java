@@ -77,16 +77,6 @@ public class Main {
         for (Doctor.AvailableAppointment availableAppointment: myDoctor.availableAppointments) {
             System.out.println(availableAppointment.getDate() + " - " + availableAppointment.getTime());
         }
-
-
-
-
-
-
-
-
-
-
-
+        System.out.println(patient);
     }
 }
