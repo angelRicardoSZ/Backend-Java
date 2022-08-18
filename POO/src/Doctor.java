@@ -42,6 +42,14 @@ public class Doctor extends User {
         return availableAppointments;
     }
 
+    @Override
+    public String toString() {
+        return super.toString() + "Doctor{" +
+                "speciality='" + speciality + '\'' +
+                ", availableAppointments=" + availableAppointments.toString() +
+                '}';
+    }
+
     // nested class: create a new appointment
     public static class AvailableAppointment {
         private int id;
@@ -76,6 +84,15 @@ public class Doctor extends User {
 
         public void setTime(String time) {
             this.time = time;
+        }
+
+        @Override
+        public String toString() {
+            return "AvailableAppointment{" +
+                    "id=" + id +
+                    ", date=" + date +
+                    ", time='" + time + '\'' +
+                    '}';
         }
     }
 }

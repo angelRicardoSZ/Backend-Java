@@ -10,11 +10,11 @@ public class Main {
 
         //showMenu();
 
-        Doctor myDoctor = new Doctor("Angel","specialliy 1");
+        Doctor myDoctor = new Doctor("Angel","doctor@hotmail.com");
 
         System.out.println(myDoctor.getName());
 
-        System.out.println(myDoctor.speciality);
+        System.out.println(myDoctor.getEmail());
 
         Patient patient = new Patient("Patient 1", "w@hotmail.com");
 
@@ -26,11 +26,11 @@ public class Main {
 
         System.out.println(patient.getPhoneNumber());
 
-        int i = 0;
+        //int i = 0;
 
-        int b = 2;
+        //int b = 2;
 
-        b = i;
+        //b = i;
 
         // b = 0
 
@@ -71,11 +71,13 @@ public class Main {
         myDoctor.addAvailableAppointment(new Date(), "10 am");
         myDoctor.addAvailableAppointment(new Date(), "1 pm");
 
+        System.out.println(myDoctor);
+
         System.out.println(myDoctor.getAvailableAppointments());
 
         // for-each
         for (Doctor.AvailableAppointment availableAppointment: myDoctor.availableAppointments) {
-            System.out.println(availableAppointment.getDate() + " - " + availableAppointment.getTime());
+            System.out.println("List of available appointments "+availableAppointment.getDate() + " - " + availableAppointment.getTime());
         }
         System.out.println(patient);
     }
