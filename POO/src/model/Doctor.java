@@ -1,3 +1,5 @@
+package model;
+
 import java.util.ArrayList;
 import java.util.Date;
 public class Doctor extends User {
@@ -5,7 +7,7 @@ public class Doctor extends User {
 
     String speciality;
 
-    Doctor(String name, String email) {
+    public Doctor(String name, String email) {
         super(name, email);
         System.out.println("El nombre del doctor asignado es: " + name);
     }
@@ -26,11 +28,11 @@ public class Doctor extends User {
     //}
 
     //public void showId(){
-    //    System.out.println("ID Doctor: " + id);
+    //    System.out.println("ID model.Doctor: " + id);
     //}
 
     // array list of type objects AvailableAppointment
-    ArrayList<AvailableAppointment> availableAppointments = new ArrayList<AvailableAppointment>();
+    public ArrayList<AvailableAppointment> availableAppointments = new ArrayList<AvailableAppointment>();
 
     // method to add appointments
     public void addAvailableAppointment(Date date, String time) {
@@ -44,7 +46,7 @@ public class Doctor extends User {
 
     @Override
     public String toString() {
-        return super.toString() + "Doctor{" +
+        return super.toString() + "model.Doctor{" +
                 "speciality='" + speciality + '\'' +
                 ", availableAppointments=" + availableAppointments.toString() +
                 '}';

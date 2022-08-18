@@ -1,8 +1,7 @@
-import javax.print.Doc;
+import model.Doctor;
+import model.Patient;
 
 import java.util.Date;
-
-import static ui.UiMenu.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -16,7 +15,7 @@ public class Main {
 
         System.out.println(myDoctor.getEmail());
 
-        Patient patient = new Patient("Patient 1", "w@hotmail.com");
+        Patient patient = new Patient("model.Patient 1", "w@hotmail.com");
 
         patient.setWeight(54.6);
 
@@ -34,34 +33,34 @@ public class Main {
 
         // b = 0
 
-        Patient patient3 = new Patient("Patient 3", "w3@hotmail.com");
+        Patient patient3 = new Patient("model.Patient 3", "w3@hotmail.com");
 
-        Patient patient4 = new Patient("Patient 4", "w4@hotmail.com");
+        Patient patient4 = new Patient("model.Patient 4", "w4@hotmail.com");
 
-        System.out.println("Patient 3");
+        System.out.println("model.Patient 3");
 
         System.out.println(patient3);
         System.out.println(patient3.getName());
 
-        System.out.println("Patient 4");
+        System.out.println("model.Patient 4");
 
         System.out.println(patient4);
         System.out.println(patient4.getName());
 
         patient3 = patient4;
 
-        System.out.println("Patient 3 edited");
+        System.out.println("model.Patient 3 edited");
 
         System.out.println(patient3);
         System.out.println(patient3.getName());
 
-        System.out.println("Patient 4 edited");
+        System.out.println("model.Patient 4 edited");
 
         System.out.println(patient4);
         System.out.println(patient4.getName());
 
-        patient4.setName("Patient 4 new name");
-        System.out.println("Patient 4 name edited");
+        patient4.setName("model.Patient 4 new name");
+        System.out.println("model.Patient 4 name edited");
         System.out.println(patient3.getName());
         System.out.println(patient4.getName());
 

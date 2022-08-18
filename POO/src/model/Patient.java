@@ -1,10 +1,12 @@
+package model;
+
 public class Patient extends User{
     private String birthday;
     private Double weight;
     private Double height;
     String blood;
 
-    Patient(String name, String email){
+    public Patient(String name, String email){
         super( name, email);
         System.out.println("El nombre del paciente es: " + name);
 
