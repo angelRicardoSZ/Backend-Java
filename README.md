@@ -727,3 +727,50 @@ class Main {
 
 2) Java does not support "multiple inheritance" (a class can only inherit from one superclass). However, it can be achieved with interfaces, because the class can **implement** multiple interfaces. **Note:** To implement multiple interfaces, separate them with a comma (see example below).
 
+## Functional programming in Java
+
+The **Function Interface** is a part of the **java.util.function** package which has been introduced since Java 8, to implement [functional programming](https://www.geeksforgeeks.org/functional-programming-paradigm/) in Java. It represents a function which takes in one argument and produces a result. Hence this functional interface takes in 2 generics namely as follows:
+
+- **T**: denotes the type of the input argument
+- **R**: denotes the return type of the function
+
+*The lambda expression assigned to an object of Function type is used to define its* **apply()** *which eventually applies the given function on the argument.*
+
+### Methods in Function Interface
+
+**Method 1:** apply()
+
+**Parameters:** This method takes in only one parameter **t** which is the function argument
+
+**Return Type:** This method returns the **function result** which is of type R.
+
+**Example** 
+
+```java
+// Java Program to Illustrate Functional Interface
+// Via apply() method
+ 
+// Importing interface
+import java.util.function.Function;
+ 
+// Main class
+public class GFG {
+ 
+    // Main driver method
+    public static void main(String args[])
+    {
+        // Function which takes in a number
+        // and returns half of it
+        Function<Integer, Double> half = a -> a / 2.0;
+ 
+        // Applying the function to get the result
+        System.out.println(half.apply(10));
+    }
+}
+```
+
+Output
+
+```
+5.0
+```
