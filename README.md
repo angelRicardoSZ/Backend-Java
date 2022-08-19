@@ -900,3 +900,78 @@ Output
 True
 ```
 
+## Collections
+
+Any group of individual objects which are represented as a single unit is known as the collection of the objects. In Java, a separate framework named the *“Collection Framework”* has been defined in JDK 1.2 which holds all the collection classes and interface in it. 
+
+
+
+
+
+## Java 8 | Consumer Interface in Java
+
+The **Consumer Interface** is a part of the **java.util.function** package which has been introduced since Java 8, to implement [functional programming](https://www.geeksforgeeks.org/functional-programming-paradigm/) in Java. It represents a function which takes in one argument and produces a result. However these kind of functions don’t return any value.
+The lambda expression assigned to an object of Consumer type is used to define its **accept()** which eventually applies the given operation on its argument. Consumers are useful when it not needed to return any value as they are expected to operate via side-effects. 
+
+1. accept()
+
+   This method accepts one value and performs the operation on the given argument
+
+   ```
+   void accept(T t)
+   ```
+
+**Parameters:** This method takes in one parameter: 
+ 
+
+- **t**– the input argument
+
+**Returns:** This method does not return any value.
+Below is the code to illustrate accept() method:
+
+
+
+## Supplier Interface in Java
+
+The **Supplier Interface** is a part of the **java.util.function** package which has been introduced since Java 8, to implement [functional programming](https://www.geeksforgeeks.org/functional-programming-paradigm/) in Java. It represents a function which does not take in any argument but produces a value of type T.
+
+Hence this functional interface takes in only one generic namely:-
+
+- **T**: denotes the type of the result
+
+The lambda expression assigned to an object of Supplier type is used to define its **get()** which eventually produces a value. Suppliers are useful when we don’t need to supply any value and obtain a result at the same time.
+
+The Supplier interface consists of only one function:
+
+### 1. get()
+
+This method does not take in any argument but produces a value of type T.
+
+```java
+import java.util.function.Supplier;
+
+public class Main {
+	public static void main(String args[])
+	{
+
+		// This function returns a random value.
+		Supplier<Double> randomValue = () -> Math.random();
+
+		// Print the random value using get()
+		System.out.println(randomValue.get());
+	}
+}
+```
+
+2. andThen()
+
+   It returns a composed Consumer wherein the parameterized Consumer will be executed after the first one. If evaluation of either function throws an error, it is relayed to the caller of the composed operation.
+   **Note:** The function being passed as the argument should be of type Consumer.
+   **Syntax:** 
+
+   ```java
+   default Consumer <T> 
+           andThen(Consumer<? super T> after)
+   ```
+
+   
