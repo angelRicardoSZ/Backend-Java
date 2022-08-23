@@ -1,8 +1,15 @@
 package ui;
 
+import model.Doctor;
+
+import javax.print.Doc;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class UIDoctorMenu {
+
+    public static ArrayList<Doctor> doctorsAvailableAppointments = new ArrayList<>();
+
     public static void showDoctorMenu()
     {
         int response = 0;
@@ -44,22 +51,47 @@ public class UIDoctorMenu {
             Scanner sc = new Scanner(System.in);
             response = Integer.valueOf(sc.nextLine());
 
-            // response validation
+            // if the user select a valid month:
             if(response >0  && response <4)
             {
                 int monthSelected = response;
+
+                // month validation by the user
                 System.out.println("The month selected is: ");
                 System.out.println(monthSelected + ". " + UiMenu.MONTHS[monthSelected]);
 
+                // date validation by the user
                 System.out.println("Insert the date available: [dd/mm/yyyy] ");
                 String date = sc.nextLine();
                 System.out.println("The date selected is: ");
                 System.out.println(date + "\n1. Correct \n2. Change date");
+                int responseDate = Integer.valueOf(sc.nextLine());
+                if( responseDate ==2 ) continue;
 
+                int responseTime = 0;
+                String time = "";
+                do {
+                    System.out.println("Insert the time available for date: "+ date+ "[16:00]");
+                    time= sc.nextLine();
+                    System.out.println("The time selected is: ");
+                    System.out.println(time + "\n1. Correct \n2. Change time");
+                    responseTime = Integer.valueOf(sc.nextLine());
 
+                } while (responseTime == 2);
+                UiMenu.doctorLogged.addAvailableAppointment(date, time);
+                checkDoctorAvailableAppointments(UiMenu.doctorLogged);
 
 
             }
         } while (response!=0);
+    }
+
+    private static void checkDoctorAvailableAppointments(Doctor doctor)
+    {
+        if(doctor.getAvailableAppointments().size() > 0
+        && !doctorsAvailableAppointments.contains(doctor))
+        {
+            doctorsAvailableAppointments.add(doctor)
+        }
     }
 }
