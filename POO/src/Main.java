@@ -13,7 +13,7 @@ public class Main {
 
 
         // instance of a Doctor
-        Doctor myDoctor = new Doctor("Angel","doctor@hotmail.com");
+        //Doctor myDoctor = new Doctor("Angel","doctor@hotmail.com");
 
         // Get details
 
@@ -23,13 +23,13 @@ public class Main {
 
 
         // Instance of patient
-        Patient patient = new Patient("model.Patient 1", "w@hotmail.com");
+        //Patient patient = new Patient("model.Patient 1", "w@hotmail.com");
 
-        patient.setWeight(54.6);
+        //patient.setWeight(54.6);
 
         //System.out.println(patient.getWeight());
 
-        patient.setPhoneNumber("12345678");
+        //patient.setPhoneNumber("12345678");
 
         //System.out.println(patient.getPhoneNumber());
 
@@ -87,15 +87,17 @@ public class Main {
         /* for (Doctor.AvailableAppointment availableAppointment: myDoctor.availableAppointments) {
             System.out.println("List of available appointments "+availableAppointment.getDate() + " - " + availableAppointment.getTime());
         }*/
-        System.out.println(myDoctor);
-        System.out.println(patient);
+        //System.out.println(myDoctor);
+        //System.out.println(patient);
 
-        User user = new Doctor("New User", "newUser@email.com");
-        user.showDataUser();
+        //User user = new Doctor("New User", "newUser@email.com");
+        //user.showDataUser();
 
-        User userpat = new Patient("New User", "newUser@email.com");
-        userpat.showDataUser();
+        //User userpat = new Patient("New User", "newUser@email.com");
+        //userpat.showDataUser();
 
+        /*
+        anonymous class
         User user1 = new User("User anonimo", "anonimo@gmail.com") {
             @Override
             public void showDataUser() {
@@ -104,7 +106,7 @@ public class Main {
                 System.out.println("Departamento: 3");
             }
         };
-        user1.showDataUser();
+        user1.showDataUser();*/
 
 
 
