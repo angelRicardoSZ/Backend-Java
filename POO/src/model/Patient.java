@@ -12,6 +12,11 @@ public class Patient extends User{
 
     }
 
+    @Override
+    public void showDataUser() {
+        System.out.println("Paciente del hospital: 1");
+    }
+
     public String getWeight(){
         return this.weight + " Kg.";
     }

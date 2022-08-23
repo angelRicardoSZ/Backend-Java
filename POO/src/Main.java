@@ -71,25 +71,29 @@ public class Main {
         System.out.println(patient4.getName());*/
 
         // Add appointments:
-        System.out.println("add appointments");
+        /*System.out.println("add appointments");
 
         myDoctor.addAvailableAppointment(new Date(), "4 pm");
         myDoctor.addAvailableAppointment(new Date(), "10 am");
-        myDoctor.addAvailableAppointment(new Date(), "1 pm");
+        myDoctor.addAvailableAppointment(new Date(), "1 pm");*/
 
         //System.out.println(myDoctor);
 
         // tow forms to get the availble appointments:
-        System.out.println(myDoctor.getAvailableAppointments());
+        //System.out.println(myDoctor.getAvailableAppointments());
 
         // for-each
-        for (Doctor.AvailableAppointment availableAppointment: myDoctor.availableAppointments) {
+        /* for (Doctor.AvailableAppointment availableAppointment: myDoctor.availableAppointments) {
             System.out.println("List of available appointments "+availableAppointment.getDate() + " - " + availableAppointment.getTime());
-        }
-
+        }*/
+        System.out.println(myDoctor);
         System.out.println(patient);
 
+        User user = new Doctor("New User", "newUser@email.com");
+        user.showDataUser();
 
+        User userpat = new Patient("New User", "newUser@email.com");
+        userpat.showDataUser();
 
     }
 }

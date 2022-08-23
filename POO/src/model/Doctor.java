@@ -52,6 +52,12 @@ public class Doctor extends User {
                 '}';
     }
 
+    @Override
+    public void showDataUser() {
+        System.out.println("Empleado del Hospital: 1");
+        System.out.println("Departamento: 1");
+    }
+
     // nested class: create a new appointment
     public static class AvailableAppointment {
         private int id;
