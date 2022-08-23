@@ -61,7 +61,7 @@ public class UiMenu {
 
         boolean emailCorrect = false;
         do {
-            System.out.println("Insert your correct email: [user@mail.com]");
+            System.out.println("Insert your email: [user@mail.com]");
             Scanner sc = new Scanner(System.in);
             String email = sc.nextLine();
             if(userType==1){
@@ -71,6 +71,7 @@ public class UiMenu {
                         emailCorrect = true;
                         doctorLogged = d;
                         // show doctor menu
+                        UIDoctorMenu.showDoctorMenu();
                     }
 
                 }

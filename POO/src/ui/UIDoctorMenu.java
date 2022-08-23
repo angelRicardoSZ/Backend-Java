@@ -25,9 +25,12 @@ public class UIDoctorMenu {
             response = Integer.valueOf(sc.nextLine());
             switch (response) {
                 case 1:
+                    showAddAvailableAppointmentsMenu();
                     break;
+
                 case 2:
                     break;
+
                 case 3:
                     UiMenu.showMenu();
                     break;
@@ -45,7 +48,7 @@ public class UIDoctorMenu {
             System.out.println(":: Select a month  ");
             for (int i = 0; i < 3; i++) {
                 int j = i +1;
-                System.out.println(j + ". " + UiMenu.MONTHS[j]);
+                System.out.println(j + ". " + UiMenu.MONTHS[i]);
             }
             System.out.println("0. Return ");
             Scanner sc = new Scanner(System.in);
@@ -58,7 +61,7 @@ public class UIDoctorMenu {
 
                 // month validation by the user
                 System.out.println("The month selected is: ");
-                System.out.println(monthSelected + ". " + UiMenu.MONTHS[monthSelected]);
+                System.out.println(monthSelected + ". " + UiMenu.MONTHS[monthSelected-1]);
 
                 // date validation by the user
                 System.out.println("Insert the date available: [dd/mm/yyyy] ");
@@ -91,7 +94,7 @@ public class UIDoctorMenu {
         if(doctor.getAvailableAppointments().size() > 0
         && !doctorsAvailableAppointments.contains(doctor))
         {
-            doctorsAvailableAppointments.add(doctor)
+            doctorsAvailableAppointments.add(doctor);
         }
     }
 }

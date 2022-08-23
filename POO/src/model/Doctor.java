@@ -11,7 +11,7 @@ public class Doctor extends User {
 
     public Doctor(String name, String email) {
         super(name, email);
-        System.out.println("El nombre del doctor asignado es: " + name);
+        //System.out.println("El nombre del doctor asignado es: " + name);
     }
 
     public String getSpeciality() {
