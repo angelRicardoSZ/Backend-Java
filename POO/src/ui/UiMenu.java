@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class UiMenu {
 
-    public static String[] MONTHS = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" };
+    public static final String[] MONTHS = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" };
     public static Doctor doctorLogged;
     public static Patient patientLogged;
 
@@ -96,7 +96,7 @@ public class UiMenu {
         int response = 0;
         do {
             System.out.println("\n\n");
-            System.out.println("model.Patient");
+            System.out.println("Patient");
             System.out.println("1. Book an appointment");
             System.out.println("2. My appointments");
             System.out.println("0. Return");
