@@ -1,4 +1,5 @@
 import model.Doctor;
+import model.ISchedulable;
 import model.Patient;
 import model.User;
 
@@ -94,6 +95,18 @@ public class Main {
 
         User userpat = new Patient("New User", "newUser@email.com");
         userpat.showDataUser();
+
+        User user1 = new User("User anonimo", "anonimo@gmail.com") {
+            @Override
+            public void showDataUser() {
+                System.out.println("Doctor");
+                System.out.println("Hospital cruz azul");
+                System.out.println("Departamento: 3");
+            }
+        };
+        user1.showDataUser();
+
+
 
     }
 }
