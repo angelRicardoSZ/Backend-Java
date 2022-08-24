@@ -83,7 +83,7 @@ public class UiMenu {
                     {
                         emailCorrect = true;
                         patientLogged = p;
-                        // show patient menu
+                        UIPatientMenu.showPatientMenu();
 
                     }
 
