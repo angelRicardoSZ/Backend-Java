@@ -1,6 +1,11 @@
 package ui;
 
+import model.Doctor;
+
+import java.util.ArrayList;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 public class UIPatientMenu {
     public static void showPatientMenu()
@@ -33,7 +38,26 @@ public class UIPatientMenu {
         int response = 0;
         do {
             System.out.println(":: Book an appointment");
+            System.out.println(":: select date");
+            // numeracion de la lista de fechas
+            // Indice de la fecha seleccionada
+
+            Map<Integer,Map<Integer, Doctor>> doctors = new TreeMap<>();
+            int k = 0;
+            for (int i = 0; i < UIDoctorMenu.doctorsAvailableAppointments.size(); i++) {
+                ArrayList<Doctor.AvailableAppointment> availableAppointments = UIDoctorMenu.doctorsAvailableAppointments.get(i).getAvailableAppointments();
+                Map<Integer, Doctor> doctorAppointments = new TreeMap<>();
+
+                for (int j = 0; j < availableAppointments.size(); j++) {
+                    k++;
+                    System.out.println(k+". " + availableAppointments.get(j).getDate());
+                    doctorAppointments.put(Integer.valueOf(j), UIDoctorMenu.doctorsAvailableAppointments.get(i));
+                    doctors.put(Integer.valueOf(k), doctorAppointments);
+                }
+            }
+            Scanner sc = new Scanner(System.in);
+            int responseDateSelected = Integer.valueOf(sc.nextLine());
             
-        } while (response!=0)
+        } while (response!=0);
     }
 }

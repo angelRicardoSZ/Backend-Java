@@ -8,6 +8,8 @@ public class Doctor extends User {
 
 
     String speciality;
+    // array list of type objects AvailableAppointment
+    private ArrayList<AvailableAppointment> availableAppointments = new ArrayList<AvailableAppointment>();
 
     public Doctor(String name, String email) {
         super(name, email);
@@ -33,8 +35,7 @@ public class Doctor extends User {
     //    System.out.println("ID model.Doctor: " + id);
     //}
 
-    // array list of type objects AvailableAppointment
-    public ArrayList<AvailableAppointment> availableAppointments = new ArrayList<AvailableAppointment>();
+
 
     // method to add appointments
     public void addAvailableAppointment(String date, String time) {
@@ -86,7 +87,11 @@ public class Doctor extends User {
             this.id = id;
         }
 
-        public String getDate(String DATE) {
+        public Date getDate(String DATE){
+            return date;
+        }
+
+        public String getDate() {
             return format.format(date);
         }
 
