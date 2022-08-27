@@ -88,3 +88,69 @@ http://localhost:8080/test/hello?name=NameTest
 response:
 
 Hello NameTest!
+
+[Common Application Properties (spring.io)](https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html)
+
+[Documentation](https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.core.info)
+
+Various properties can be specified inside your `application.properties` file, inside your `application.yml` file, or as command line switches. This appendix provides a list of common Spring Boot properties and references to the underlying classes that consume them.
+
+## 1. Core Properties
+
+| Name                                                         | Description                                                  | Default Value |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------- |
+| [`debug`](https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.core.debug) | Enable debug logs.                                           | `false`       |
+| [`info.*`](https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.core.info) | Arbitrary properties to add to the info endpoint.            |               |
+| [`spring.profiles.active`](https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.core.spring.profiles.active) | Comma-separated list of active profiles. Can be overridden by a command line switch. |               |
+| [`spring.config.import`](https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.core.spring.config.import) | Import additional config data.                               |               |
+| [`spring.info.git.location`](https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.core.spring.info.git.location) | Location of the generated git.properties file.               |               |
+| [`spring.main.log-startup-info`](https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.core.spring.main.log-startup-info) | Whether to log information about the application when it starts. |               |
+| [`spring.main.sources`](https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.core.spring.main.sources) | Sources (class names, package names, or XML resource locations) to include in the ApplicationContext. |               |
+| [`spring.profiles.default`](https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.core.spring.profiles.default) | Name of the profile to enable if no profile is active.       |               |
+| [`spring.quartz.jdbc.initialize-schema`](https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.core.spring.quartz.jdbc.initialize-schema) | Database schema initialization mode.                         |               |
+
+# Spring Data
+
+Spring Data’s mission is to provide a familiar and consistent, Spring-based programming model for data access while still retaining the special traits of the underlying data store.
+
+Spring Data JPA, part of the larger Spring Data family, makes it easy to easily implement JPA based repositories. This module deals with enhanced support for JPA based data access layers. It makes it easier to build Spring-powered applications that use data access technologies.
+
+## Features
+
+- Sophisticated support to build repositories based on Spring and JPA
+- Support for [Querydsl](http://www.querydsl.com/) predicates and thus type-safe JPA queries
+- Transparent auditing of domain class
+- Pagination support, dynamic query execution, ability to integrate custom data access code
+- Validation of `@Query` annotated queries at bootstrap time
+- Support for XML based entity mapping
+- JavaConfig based repository configuration by introducing `@EnableJpaRepositories`.
+
+### Connection to database
+
+```
+connecting JPA
+
+// in build.gradle file
+
+implementation 'org.springframework.boot:spring-boot-starter-data-jpa' 
+// get from https://mvnrepository.com/, search = spring boot data jpa, select spring boot starter jpa
+// select the final version -> copy group (in this case = org.springframework.boot) and name ( int 
+// this case = spring-boot-starter-data-jpa)
+// after load gradle
+
+
+connection to db
+
+// in application-environment.properties
+
+// spring.datasource.url=jdbc:postgresql://localhost:5432/dbname
+// spring.datasource.username=username 
+// spring.datasource.password=pass
+
+
+
+
+
+
+```
+
