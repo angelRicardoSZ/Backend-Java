@@ -291,6 +291,50 @@ Various properties can be specified inside your `application.properties` file, i
 | [`server.servlet.context-path`](https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.server.server.servlet.context-path) | Context path of the application.                             |               |
 | [`server.servlet.encoding.charset`](https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.server.server.servlet.encoding.charset) | Charset of HTTP requests and responses. Added to the "Content-Type" header if not set explicitly. | `UTF-8`       |
 
+## [Profiles](https://docs.spring.io/spring-boot/docs/current/reference/html/features.html#features.profiles)
+
+Spring Profiles provide a way to segregate parts of your application configuration and make it be available only in certain environments. Any `@Component`, `@Configuration` or `@ConfigurationProperties` can be marked with `@Profile` to limit when it is loaded, as shown in the following example:
+
+```java
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
+
+@Configuration(proxyBeanMethods = false)
+@Profile("production")
+public class ProductionConfiguration {
+
+    // ...
+
+}
+```
+
+You can use a `spring.profiles.active` `Environment` property to specify which profiles are active. You can specify the property in any of the ways described earlier in this chapter. For example, you could include it in your `application.properties`, as shown in the following example:
+
+```
+spring.profiles.active=dev,hsqldb
+```
+
+You could also specify it on the command line by using the following switch: `--spring.profiles.active=dev,hsqldb`.
+
+If no profile is active, a default profile is enabled. The name of the default profile is `default` and it can be tuned using the `spring.profiles.default` `Environment` property, as shown in the following example:
+
+```
+spring.profiles.default=none
+```
+
+`spring.profiles.active` and `spring.profiles.default` can only be used in non-profile specific documents. This means they cannot be included in [profile specific files](https://docs.spring.io/spring-boot/docs/current/reference/html/features.html#features.external-config.files.profile-specific) or [documents activated](https://docs.spring.io/spring-boot/docs/current/reference/html/features.html#features.external-config.files.activation-properties) by `spring.config.activate.on-profile`.
+
+For example, the second document configuration is invalid:
+
+```
+# this document is valid
+spring.profiles.active=prod
+#---
+# this document is invalid
+spring.config.activate.on-profile=prod
+spring.profiles.active=metrics
+```
+
 
 
 # Spring Data
