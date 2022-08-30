@@ -279,6 +279,20 @@ Various properties can be specified inside your `application.properties` file, i
 | [`spring.profiles.default`](https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.core.spring.profiles.default) | Name of the profile to enable if no profile is active.       |               |
 | [`spring.quartz.jdbc.initialize-schema`](https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.core.spring.quartz.jdbc.initialize-schema) | Database schema initialization mode.                         |               |
 
+##  11. Server Properties
+
+| Name                                                         | Description                                                  | Default value |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------- |
+| [`server.address`](https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.server.server.address) | Network address to which the server should bind.             |               |
+| [`server.error.path`](https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.server.server.error.path) | Path of the error controlle                                  | /error        |
+| [`server.port`](https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.server.server.port) | Server HTTP port.                                            | 8080          |
+| [`server.reactive.session.cookie.name`](https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.server.server.reactive.session.cookie.name) | Name for the cookie.                                         |               |
+| [`server.server-header`](https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.server.server.server-header) | Value to use for the Server response header (if empty, no header is sent). |               |
+| [`server.servlet.context-path`](https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.server.server.servlet.context-path) | Context path of the application.                             |               |
+| [`server.servlet.encoding.charset`](https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.server.server.servlet.encoding.charset) | Charset of HTTP requests and responses. Added to the "Content-Type" header if not set explicitly. | `UTF-8`       |
+
+
+
 # Spring Data
 
 Spring Data’s mission is to provide a familiar and consistent, Spring-based programming model for data access while still retaining the special traits of the underlying data store.
