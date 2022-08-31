@@ -1,12 +1,17 @@
 package com.example.demo.web.controller;
 
-
+// Product class
 import com.example.demo.domain.Product;
+
+// Service
 import com.example.demo.domain.service.ProductService;
+
+//Spring framework
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+// utils
 import java.util.List;
 import java.util.Optional;
 
