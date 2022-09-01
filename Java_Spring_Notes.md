@@ -562,6 +562,6 @@ in the file: application-profile.properites
 
 spring.datasource.url=jdbc:postgresql://localhost:5432/platzi-market
 spring.datasource.username=postgres
-spring.datasource.password=Nn67xStuU22
+spring.datasource.password=pass
 ```
 
