@@ -543,3 +543,25 @@ public interface CrudRepository<T, ID> extends Repository<T, ID> {
 }
 ```
 
+## Connection to Data Base
+
+In the file: build.gradle
+
+```groovy
+dependencies {
+	runtimeOnly 'org.postgresql:postgresql'
+}
+```
+
+to get this, search in [maven repository](https://mvnrepository.com/) "postgresql" and click on PostgreSQL JDBC Driver, select the latest version and from the gradle section copy group 'org.postgresql' and name 'postgresql'
+
+in the file: application-profile.properites
+
+```
+#Database
+
+spring.datasource.url=jdbc:postgresql://localhost:5432/platzi-market
+spring.datasource.username=postgres
+spring.datasource.password=Nn67xStuU22
+```
+

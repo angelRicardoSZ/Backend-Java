@@ -2,9 +2,9 @@
 
 In this repository you will find different personal projects developed in Java SE courses.  The objective of this document is to describe the structure of these projects, their most important functions and the results obtained.
 
-## 1.- Market
+## 1.- Market Project
 
-The project architecture is domain oriented ([Domain Drive Desing](https://medium.com/@jonathanloscalzo/domain-driven-design-principios-beneficios-y-elementos-primera-parte-aad90f30aa35)), then the project is divided into the following layers:
+The project architecture is domain oriented ([Domain Drive Desing](https://medium.com/@jonathanloscalzo/domain-driven-design-principios-beneficios-y-elementos-primera-parte-aad90f30aa35)), the project is divided into the following layers:
 
 **Domain:** 
 
@@ -256,8 +256,34 @@ The project architecture is domain oriented ([Domain Drive Desing](https://mediu
 
 - API Rest controllers
 
-Persistence
+**Persistence**
 
 - Entities 
 - Repositories
+
+**DATA BASE**
+
+The project is connected to a DB in POSTGRESQL, the DB has the following tables:
+
+*CATEGORIAS*
+
+A category has many products
+
+*PRODUCTOS*
+
+A product has many shopping
+
+*CLIENTES*
+
+A client has many shopping
+
+*COMPRAS*
+
+A purchase has many products
+
+*COMPRAS_PRODUCTOS* 
+
+In this table it is found as foreign keys: id_compra and id_producto
+
+The DB is generated with the **schema.sql** file and **data.sql**
 
