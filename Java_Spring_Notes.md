@@ -1,3 +1,9 @@
+# Spring Framework
+
+[TOC]
+
+
+
 # Spring Boot
 
 Spring Boot makes it easy to create stand-alone, production-grade Spring based Applications that you can "just run".
@@ -291,7 +297,7 @@ Various properties can be specified inside your `application.properties` file, i
 | [`server.servlet.context-path`](https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.server.server.servlet.context-path) | Context path of the application.                             |               |
 | [`server.servlet.encoding.charset`](https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.server.server.servlet.encoding.charset) | Charset of HTTP requests and responses. Added to the "Content-Type" header if not set explicitly. | `UTF-8`       |
 
-## [Profiles](https://docs.spring.io/spring-boot/docs/current/reference/html/features.html#features.profiles)
+# [Profiles](https://docs.spring.io/spring-boot/docs/current/reference/html/features.html#features.profiles)
 
 Spring Profiles provide a way to segregate parts of your application configuration and make it be available only in certain environments. Any `@Component`, `@Configuration` or `@ConfigurationProperties` can be marked with `@Profile` to limit when it is loaded, as shown in the following example:
 
@@ -335,7 +341,7 @@ spring.config.activate.on-profile=prod
 spring.profiles.active=metrics
 ```
 
-# Spring Data
+# [Spring Data](https://spring.io/projects/spring-data)
 
 Spring Data’s mission is to provide a familiar and consistent, Spring-based programming model for data access while still retaining the special traits of the underlying data store.
 
@@ -351,28 +357,20 @@ Spring Data JPA, part of the larger Spring Data family, makes it easy to easily 
 - Support for XML based entity mapping
 - JavaConfig based repository configuration by introducing `@EnableJpaRepositories`.
 
-### Connection to database
+## Main modules
 
-```
-connecting JPA
-
-// in build.gradle file
-
-implementation 'org.springframework.boot:spring-boot-starter-data-jpa' 
-// get from https://mvnrepository.com/, search = spring boot data jpa, select spring boot starter jpa
-// select the final version -> copy group (in this case = org.springframework.boot) and name ( int 
-// this case = spring-boot-starter-data-jpa)
-// after load gradle
-
-
-connection to db
-
-// in application-environment.properties
-
-// spring.datasource.url=jdbc:postgresql://localhost:5432/dbname
-// spring.datasource.username=username 
-// spring.datasource.password=pass
-```
+- [Spring Data Commons](https://github.com/spring-projects/spring-data-commons) - Core Spring concepts underpinning every Spring Data module.
+- [Spring Data JDBC](https://spring.io/projects/spring-data-jdbc) - Spring Data repository support for JDBC.
+- [Spring Data JDBC Ext](https://spring.io/projects/spring-data-jdbc-ext) - Support for database specific extensions to standard JDBC including support for Oracle RAC fast connection failover, AQ JMS support and support for using advanced data types.
+- [Spring Data JPA](https://spring.io/projects/spring-data-jpa) - Spring Data repository support for JPA.
+- [Spring Data KeyValue](https://github.com/spring-projects/spring-data-keyvalue) - `Map` based repositories and SPIs to easily build a Spring Data module for key-value stores.
+- [Spring Data LDAP](https://spring.io/projects/spring-data-ldap) - Spring Data repository support for [Spring LDAP](https://github.com/spring-projects/spring-ldap).
+- [Spring Data MongoDB](https://spring.io/projects/spring-data-mongodb) - Spring based, object-document support and repositories for MongoDB.
+- [Spring Data Redis](https://spring.io/projects/spring-data-redis) - Easy configuration and access to Redis from Spring applications.
+- [Spring Data REST](https://spring.io/projects/spring-data-rest) - Exports Spring Data repositories as hypermedia-driven RESTful resources.
+- [Spring Data for Apache Cassandra](https://spring.io/projects/spring-data-cassandra) - Easy configuration and access to Apache Cassandra or large scale, highly available, data oriented Spring applications.
+- [Spring Data for Apache Geode](https://spring.io/projects/spring-data-geode) - Easy configuration and access to Apache Geode for highly consistent, low latency, data oriented Spring applications.
+- [Spring Data for VMware Tanzu GemFire](https://spring.io/projects/spring-data-gemfire) - Easy configuration and access to Pivotal GemFire for your highly consistent, low latency/high through-put, data-oriented Spring applications.
 
 ### [Spring Data JPA - Reference Documentation](https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#preface)
 
@@ -543,7 +541,146 @@ public interface CrudRepository<T, ID> extends Repository<T, ID> {
 }
 ```
 
-## Connection to Data Base
+[spring-data-commons/Repository.java at main · spring-projects/spring-data-commons (github.com)](https://github.com/spring-projects/spring-data-commons/blob/main/src/main/java/org/springframework/data/repository/Repository.java)
+
+```
+/*
+ * Copyright 2011-2022 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.springframework.data.repository;
+
+import org.springframework.stereotype.Indexed;
+
+/**
+ * Central repository marker interface. Captures the domain type to manage as well as the domain type's id type. General
+ * purpose is to hold type information as well as being able to discover interfaces that extend this one during
+ * classpath scanning for easy Spring bean creation.
+ * <p>
+ * Domain repositories extending this interface can selectively expose CRUD methods by simply declaring methods of the
+ * same signature as those declared in {@link CrudRepository}.
+ * 
+ * @see CrudRepository
+ * @param <T> the domain type the repository manages
+ * @param <ID> the type of the id of the entity the repository manages
+ * @author Oliver Gierke
+ */
+@Indexed
+public interface Repository<T, ID> {
+
+}
+```
+
+### 4.2. Query Methods
+
+Standard CRUD functionality repositories usually have queries on the underlying datastore. With Spring Data, declaring those queries becomes a four-step process:
+
+1.-Declare an interface extending Repository or one of its subinterfaces and type it to the domain class and ID type that it should handle, as shown in the following example:
+
+```java
+interface PersonRepository extends Repository<Person, Long> { … }
+```
+
+2.- Declare query methods on the interface.
+
+```java
+interface PersonRepository extends Repository<Person, Long> {
+  List<Person> findByLastname(String lastname);
+}
+```
+
+3.- Set up Spring to create proxy instances for those interfaces, either with [JavaConfig](https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.create-instances.java-config) or with [XML configuration](https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.create-instances).
+
+a.- To use Java configuration, create a class similar to the following:
+
+```java
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+
+@EnableJpaRepositories
+class Config { … }
+```
+
+b.- To use XML configuration, define a bean similar to the following:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+   xsi:schemaLocation="http://www.springframework.org/schema/beans
+     https://www.springframework.org/schema/beans/spring-beans.xsd
+     http://www.springframework.org/schema/data/jpa
+     https://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+
+   <jpa:repositories base-package="com.acme.repositories"/>
+
+</beans>
+```
+
+The JPA namespace is used in this example. If you use the repository abstraction for any other store, you need to change this to the appropriate namespace declaration of your store module. In other words, you should exchange `jpa` in favor of, for example, `mongodb`.
+
+Also, note that the JavaConfig variant does not configure a package explicitly, because the package of the annotated class is used by default. To customize the package to scan, use one of the `basePackage…` attributes of the data-store-specific repository’s `@Enable${store}Repositories`-annotation.
+
+4.- Inject the repository instance and use it, as shown in the following example:
+
+```java
+class SomeClient {
+
+  private final PersonRepository repository;
+
+  SomeClient(PersonRepository repository) {
+    this.repository = repository;
+  }
+
+  void doSomething() {
+    List<Person> persons = repository.findByLastname("Matthews");
+  }
+}
+```
+
+### 4.3. Defining Repository Interfaces
+
+To define a repository interface, you first need to define a domain class-specific repository interface. The interface must extend `Repository` and be typed to the domain class and an ID type. If you want to expose CRUD methods for that domain type, extend `CrudRepository` instead of `Repository`.
+
+
+
+### Connection to database
+
+```
+connecting JPA
+
+// in build.gradle file
+
+implementation 'org.springframework.boot:spring-boot-starter-data-jpa' 
+// get from https://mvnrepository.com/, search = spring boot data jpa, select spring boot starter jpa
+// select the final version -> copy group (in this case = org.springframework.boot) and name ( int 
+// this case = spring-boot-starter-data-jpa)
+// after load gradle
+
+
+connection to db
+
+// in application-environment.properties
+
+// spring.datasource.url=jdbc:postgresql://localhost:5432/dbname
+// spring.datasource.username=username 
+// spring.datasource.password=pass
+```
+
+### 
+
+# Connection to Data Base
 
 In the file: build.gradle
 
@@ -565,3 +702,256 @@ spring.datasource.username=postgres
 spring.datasource.password=pass
 ```
 
+
+
+# [Spring Framework Annotations]([Spring Framework Annotations - GeeksforGeeks](https://www.geeksforgeeks.org/spring-framework-annotations/))
+
+**Types of Spring Framework Annotations**
+
+Basically, there are 6 types of annotation available in the whole spring framework.
+
+1. Spring Core Annotations
+2. Spring Web Annotations
+3. Spring Boot Annotations
+4. Spring Scheduling Annotations
+5. Spring Data Annotations
+6. Spring Bean Annotations
+
+**Type 1:** Spring Core Annotations 
+
+Spring annotations present in the ***org.springframework.beans.factory.annotation*** and ***org.springframework.context.annotation*** packages are commonly known as Spring Core annotations. We can divide them into two categories:
+
+- DI-Related Annotations
+  - @Autowired
+  - @Qualifier
+  - @Primary
+  - @Bean
+  - @Lazy
+  - @Required
+  - @Value
+  - @Scope
+  - @Lookup, etc.
+- Context Configuration Annotations
+  - @Profile
+  - @Import
+  - @ImportResource
+  - @PropertySource, etc.
+
+**A** DI (Dependency Injection) Related Annotations
+
+**1.1:** @Autowired
+
+@Autowired annotation is applied to the fields, setter methods, and constructors. It injects object dependency implicitly. We use @Autowired to mark the dependency that will be injected by the Spring container.
+
+**1.2:** Field injection
+
+```java
+class Student {
+	@Autowired
+	Address address;
+}
+```
+
+**1.3:** Constructor injection
+
+```java
+class Student {
+	Address address;
+
+	@Autowired
+	Student(Address address) {
+		this.address = address;
+	}
+}
+```
+
+**1.4:** Setter injection
+
+```
+class Student {
+	Address address;
+
+	@Autowired
+	void setaddress(Address address) {
+		this.address = address;
+	}
+}
+```
+
+**B Context Configuration Annotations** 
+
+@Profile: If you want Spring to use a @Component class or a @Bean method only when a specific profile is active then you can mark it with @Profile. 
+
+```java
+@Component
+@Profile("developer")
+public class Employee {}
+```
+
+**Type 2:** Spring Web Annotations
+
+Spring annotations present in the ***org.springframework.web.bind.annotation p***ackages are commonly known as Spring Web annotations. Some of the annotations that are available in this category are:
+
+- @RequestMapping
+- @RequestBody
+- @PathVariable
+- @RequestParam
+- Response Handling Annotations
+  - @ResponseBody
+  - @ExceptionHandler
+  - @ResponseStatus
+- @Controller
+- @RestController
+- @ModelAttribute
+- @CrossOrigin
+
+**Example:** @Controller
+
+Spring @Controller annotation is also a specialization of @Component annotation. The @Controller annotation indicates that a particular class serves the role of a controller. Spring Controller annotation is typically used in combination with annotated handler methods based on the @RequestMapping annotation. It can be applied to classes only. It’s used to mark a class as a web request handler. It’s mostly used with Spring MVC applications. This annotation acts as a stereotype for the annotated class, indicating its role. The dispatcher scans such annotated classes for mapped methods and detects @RequestMapping annotations.
+
+```java
+package com.example.demo.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+@Controller
+public class DemoController {
+
+	@RequestMapping("/hello")
+	@ResponseBody
+	public String helloGFG()
+	{
+		return "Hello GeeksForGeeks";
+	}
+}
+```
+
+**Type 3:** Spring Boot Annotations
+
+Spring annotations present in the ***org.springframework.boot.autoconfigure*** and ***org.springframework.boot.autoconfigure.condition*** packages are commonly known as Spring Boot annotations. Some of the annotations that are available in this category are:
+
+- @SpringBootApplication
+- @EnableAutoConfiguration
+- Auto-Configuration Conditions
+  - @ConditionalOnClass, and @ConditionalOnMissingClass
+  - @ConditionalOnBean, and @ConditionalOnMissingBean
+  - @ConditionalOnProperty
+  - @ConditionalOnResource
+  - @ConditionalOnWebApplication and @ConditionalOnNotWebApplication
+  - @ConditionalExpression
+  - @Conditional
+
+**Example:** @SpringBootApplication
+
+This annotation is used to mark the main class of a Spring Boot application. It encapsulates @Configuration, @EnableAutoConfiguration, and @ComponentScan annotations with their default attributes.
+
+```java
+@SpringBootApplication
+
+// Class
+public class DemoApplication {
+
+	// Main driver method
+	public static void main(String[] args)
+	{
+
+		SpringApplication.run(DemoApplication.class, args);
+	}
+}
+```
+
+**Type 4:** Spring Scheduling Annotations
+
+Spring annotations present in the ***org.springframework.scheduling.annotation*** packages are commonly known as Spring Scheduling annotations. Some of the annotations that are available in this category are:
+
+- @EnableAsync
+- @EnableScheduling
+- @Async
+- @Scheduled
+- @Schedules
+
+**Example:** @EnableAsync
+
+This annotation is used to enable asynchronous functionality in Spring.
+
+```java
+@Configuration
+@EnableAsync
+class Config {}
+```
+
+**Type 5:** Spring Data Annotations
+
+Spring Data provides an abstraction over data storage technologies. Hence the business logic code can be much more independent of the underlying persistence implementation. Some of the annotations that are available in this category are:
+
+- Common Spring Data Annotations
+  - @Transactional
+  - @NoRepositoryBean
+  - @Param
+  - @Id
+  - @Transient
+  - @CreatedBy, @LastModifiedBy, @CreatedDate, @LastModifiedDate
+- Spring Data JPA Annotations
+  - @Query
+  - @Procedure
+  - @Lock
+  - @Modifying
+  - @EnableJpaRepositories
+- Spring Data Mongo Annotations
+  - @Document
+  - @Field
+  - @Query
+  - @EnableMongoRepositories
+
+**Example:**
+
+**A** @Transactional 
+
+When there is a need to configure the transactional behavior of a method, we can do it with @Transactional annotation. 
+
+```java
+@Transactional
+void payment() {}
+```
+
+**B** @Id: @Id marks a field in a model class as the primary key. Since it’s implementation-independent, it makes a model class easy to use with multiple data store engines.
+
+```java
+class Student {
+
+    @Id
+    Long id;
+
+    // other fields
+      // ........... 
+    
+}
+```
+
+**Type 6:** Spring Bean Annotations
+
+There’re several ways to configure beans in a Spring container. You can declare them using XML configuration or you can declare beans using the @Bean annotation in a configuration class or you can mark the class with one of the annotations from the ***org.springframework.stereotype*** package and leave the rest to component scanning. Some of the annotations that are available in this category are:
+
+- @ComponentScan
+- @Configuration
+- Stereotype Annotations
+  - [@Component](https://www.geeksforgeeks.org/spring-component-annotation-with-example/)
+  - @Service
+  - [@Repository](https://www.geeksforgeeks.org/spring-repository-annotation-with-example/)
+  - [@Controller](https://www.geeksforgeeks.org/spring-controller-annotation-with-example/)
+
+**Example:** Stereotype Annotations
+
+Spring Framework provides us with some special annotations. These annotations are used to create Spring beans automatically in the application context. @Component annotation is the main Stereotype Annotation. There are some Stereotype meta-annotations which is derived from *@Component* those are
+
+1. *@Service*
+2. *@Repository*
+3. *@Controller*
+
+**1: @Service:** We specify a class with @Service to indicate that they’re holding the business logic. Besides being used in the service layer, there isn’t any other special use for this annotation. The utility classes can be marked as Service classes.
+
+**2: @Repository:** We specify a class with @Repository to indicate that they’re dealing with **CRUD operations**, usually, it’s used with DAO (Data Access Object) or Repository implementations that deal with database tables.
+
+**3: @Controller:** We specify a class with @Controller to indicate that they’re front controllers and responsible to handle user requests and return the appropriate response. It is mostly used with REST Web Services.
