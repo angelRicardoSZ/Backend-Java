@@ -543,7 +543,7 @@ public interface CrudRepository<T, ID> extends Repository<T, ID> {
 
 [spring-data-commons/Repository.java at main · spring-projects/spring-data-commons (github.com)](https://github.com/spring-projects/spring-data-commons/blob/main/src/main/java/org/springframework/data/repository/Repository.java)
 
-```
+```java
 /*
  * Copyright 2011-2022 the original author or authors.
  *
@@ -653,7 +653,138 @@ class SomeClient {
 
 To define a repository interface, you first need to define a domain class-specific repository interface. The interface must extend `Repository` and be typed to the domain class and an ID type. If you want to expose CRUD methods for that domain type, extend `CrudRepository` instead of `Repository`.
 
+### 4.4 Defining Query Methods
 
+The repository proxy has two ways to derive a store-specific query from the method name:
+
+- By deriving the query from the method name directly.
+- By using a manually defined query.
+
+Available options depend on the actual store. However, there must be a strategy that decides what actual query is created. The next section describes the available options
+
+#### 4.4.2 Query Creation
+
+The query builder mechanism built into the Spring Data repository infrastructure is useful for building constraining queries over entities of the repository.
+
+The following example shows how to create a number of queries:
+
+**Example 13. Query creation from method names**
+
+```java
+interface PersonRepository extends Repository<Person, Long> {
+
+  List<Person> findByEmailAddressAndLastname(EmailAddress emailAddress, String lastname);
+
+  // Enables the distinct flag for the query
+  List<Person> findDistinctPeopleByLastnameOrFirstname(String lastname, String firstname);
+  List<Person> findPeopleDistinctByLastnameOrFirstname(String lastname, String firstname);
+
+  // Enabling ignoring case for an individual property
+  List<Person> findByLastnameIgnoreCase(String lastname);
+  // Enabling ignoring case for all suitable properties
+  List<Person> findByLastnameAndFirstnameAllIgnoreCase(String lastname, String firstname);
+
+  // Enabling static ORDER BY for a query
+  List<Person> findByLastnameOrderByFirstnameAsc(String lastname);
+  List<Person> findByLastnameOrderByFirstnameDesc(String lastname);
+}
+```
+
+Parsing query method names is divided into subject and predicate. The first part (`find…By`, `exists…By`) defines the subject of the query, the second part forms the predicate. The introducing clause (subject) can contain further expressions. Any text between `find` (or other introducing keywords) and `By` is considered to be descriptive unless using one of the result-limiting keywords such as a `Distinct` to set a distinct flag on the query to be created or [`Top`/`First` to limit query results](https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.limit-query-result).
+
+##  5. Reference Documentation
+
+#### 5.1.1. Introduction
+
+This section describes the basics of configuring Spring Data JPA through either:
+
+- “[Spring Namespace](https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.namespace)” (XML configuration)
+- “[Annotation-based Configuration](https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.java-config)” (Java configuration)
+
+##### 5.1.4. Stored Procedures
+
+The JPA 2.1 specification introduced support for calling stored procedures by using the JPA criteria query API. We Introduced the `@Procedure` annotation for declaring stored procedure metadata on a repository method.
+
+The examples to follow use the following stored procedure:
+
+**Example 91. The definition of the** `plus1inout` **procedure in HSQL DB**
+
+```sql
+/;
+DROP procedure IF EXISTS plus1inout
+/;
+CREATE procedure plus1inout (IN arg int, OUT res int)
+BEGIN ATOMIC
+ set res = arg + 1;
+END
+/;
+```
+
+Metadata for stored procedures can be configured by using the `NamedStoredProcedureQuery` annotation on an entity type.
+
+**Example 92. StoredProcedure metadata definitions on an entity.**
+
+```
+@Entity
+@NamedStoredProcedureQuery(name = "User.plus1", procedureName = "plus1inout", parameters = {
+  @StoredProcedureParameter(mode = ParameterMode.IN, name = "arg", type = Integer.class),
+  @StoredProcedureParameter(mode = ParameterMode.OUT, name = "res", type = Integer.class) })
+public class User {}
+```
+
+#### 5.1.3. Query Methods
+
+Generally, the query creation mechanism for JPA works as described in “[Query Methods](https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.query-methods)”. The following example shows what a JPA query method translates into:
+
+**Example 57. Query creation from method names**
+
+```java
+public interface UserRepository extends Repository<User, Long> {
+
+  List<User> findByEmailAddressAndLastname(String emailAddress, String lastname);
+}
+```
+
+We create a query using the JPA criteria API from this, but, essentially, this translates into the following query: `select u from User u where u.emailAddress = ?1 and u.lastname = ?2`. Spring Data JPA does a property check and traverses nested properties, as described in “[Property Expressions](https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.query-methods.query-property-expressions)”
+
+The following table describes the keywords supported for JPA and what a method containing that keyword translates to:
+
+| Keyword        | Sample                                                       | **JPQL snippet**                                             |
+| :------------- | :----------------------------------------------------------- | ------------------------------------------------------------ |
+| `Distinct`     | `findDistinctByLastnameAndFirstname`                         | `select distinct … where x.lastname = ?1 and x.firstname = ?2` |
+| `And`          | `findByLastnameAndFirstname`                                 | `… where x.lastname = ?1 and x.firstname = ?2`               |
+| `Or`           | `findByLastnameOrFirstname`                                  | `… where x.lastname = ?1 or x.firstname = ?2`                |
+| `Is`, `Equals` | `findByFirstname`,`findByFirstnameIs`,`findByFirstnameEquals` | `… where x.firstname = ?1`                                   |
+
+##### Using `@Query`
+
+Using named queries to declare queries for entities is a valid approach and works fine for a small number of queries. As the queries themselves are tied to the Java method that runs them, you can actually bind them directly by using the Spring Data JPA `@Query` annotation rather than annotating them to the domain class. This frees the domain class from persistence specific information and co-locates the query to the repository interface.
+
+Queries annotated to the query method take precedence over queries defined using `@NamedQuery` or named queries declared in `orm.xml`.
+
+The following example shows a query created with the `@Query` annotation:
+
+**Example 61. Declare query at the query method using** `@Query`
+
+```java
+public interface UserRepository extends JpaRepository<User, Long> {
+
+  @Query("select u from User u where u.emailAddress = ?1")
+  User findByEmailAddress(String emailAddress);
+}
+```
+
+**Native Queries**
+
+The `@Query` annotation allows for running native queries by setting the `nativeQuery` flag to true, as shown in the following example:
+
+```java
+public interface UserRepository extends JpaRepository<User, Long> {
+
+  @Query(value = "SELECT * FROM USERS WHERE EMAIL_ADDRESS = ?1", nativeQuery = true)
+  User findByEmailAddress(String emailAddress);
+}
+```
 
 ### Connection to database
 
@@ -678,7 +809,7 @@ connection to db
 // spring.datasource.password=pass
 ```
 
-### 
+
 
 # Connection to Data Base
 
@@ -701,8 +832,6 @@ spring.datasource.url=jdbc:postgresql://localhost:5432/platzi-market
 spring.datasource.username=postgres
 spring.datasource.password=pass
 ```
-
-
 
 # [Spring Framework Annotations]([Spring Framework Annotations - GeeksforGeeks](https://www.geeksforgeeks.org/spring-framework-annotations/))
 

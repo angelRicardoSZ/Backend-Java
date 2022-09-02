@@ -292,7 +292,7 @@ The project architecture is domain oriented ([Domain Drive Desing](https://mediu
   
       private Boolean estado;
   
-      @ManyToOne
+      @ManyToOne 
       @JoinColumn(name="id_categoria", insertable = false, updatable = false)
       private Categoria categoria;
   
