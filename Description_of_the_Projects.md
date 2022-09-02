@@ -258,7 +258,443 @@ The project architecture is domain oriented ([Domain Drive Desing](https://mediu
 
 **Persistence**
 
-- Entities 
+- Entity: Here the tables are mapped as classes.  
+
+  table "products"
+
+  ```java
+  package com.example.demo.persistence.entity;
+  
+  import javax.persistence.*;
+  
+  @Entity    // a class of type Entity indicates a class that, at an abstract level, is correlated with a table in the database. An entity represents a table stored in a database. Every instance of an entity represents a row in the table.
+  @Table(name = "productos")  // tells JPA which table to map an entity against
+  public class Producto {
+  
+      @Id  // simple primary key
+      @GeneratedValue(strategy = GenerationType.IDENTITY) // java generate automatic id
+      @Column(name = "id_producto")  //  it will allow us to define very important aspects about the columns of the database of the database such as the name, length, constrains, etc.
+      private Integer idProducto;
+  
+      private String nombre;
+  
+      @Column(name = "id_categoria")
+      private Integer idCategoria;
+  
+      @Column(name = "codigo_barras")
+      private String codigoBarras;
+  
+      @Column(name = "precio_venta")
+      private Double precioVenta;
+  
+      @Column(name = "cantidad_stock")
+      private Integer cantidadStock;
+  
+      private Boolean estado;
+  
+      @ManyToOne
+      @JoinColumn(name="id_categoria", insertable = false, updatable = false)
+      private Categoria categoria;
+  
+      public Integer getIdProducto() {
+          return idProducto;
+      }
+  
+      public void setIdProducto(Integer idProducto) {
+          this.idProducto = idProducto;
+      }
+  
+      public String getNombre() {
+          return nombre;
+      }
+  
+      public void setNombre(String nombre) {
+          this.nombre = nombre;
+      }
+  
+      public Integer getIdCategoria() {
+          return idCategoria;
+      }
+  
+      public void setIdCategoria(Integer idCategoria) {
+          this.idCategoria = idCategoria;
+      }
+  
+      public Categoria getCategoria() {
+          return categoria;
+      }
+  
+      public void setCategoria(Categoria categoria) {
+          this.categoria = categoria;
+      }
+  
+      public String getCodigoBarras() {
+          return codigoBarras;
+      }
+  
+      public void setCodigoBarras(String codigoBarras) {
+          this.codigoBarras = codigoBarras;
+      }
+  
+      public Double getPrecioVenta() {
+          return precioVenta;
+      }
+  
+      public void setPrecioVenta(Double precioVenta) {
+          this.precioVenta = precioVenta;
+      }
+  
+      public Integer getCantidadStock() {
+          return cantidadStock;
+      }
+  
+      public void setCantidadStock(Integer cantidadStock) {
+          this.cantidadStock = cantidadStock;
+      }
+  
+      public Boolean getEstado() {
+          return estado;
+      }
+  
+      public void setEstado(Boolean estado) {
+          this.estado = estado;
+      }
+  }
+  
+  ```
+
+  table "Categoria"
+
+  ```java
+  public class Categoria {
+      @Id
+      @Column(name = "id_categoria")
+      @GeneratedValue(strategy = GenerationType.IDENTITY)
+      private Integer idCategoria;
+  
+      private String descripcion;
+  
+      private Boolean estado;
+  
+  
+      @OneToMany(mappedBy = "categoria")
+      private List<Producto> productos;
+  
+      public Integer getIdCategoria() {
+          return idCategoria;
+      }
+  
+      public void setIdCategoria(Integer idCategoria) {
+          this.idCategoria = idCategoria;
+      }
+  
+      public String getDescripcion() {
+          return descripcion;
+      }
+  
+      public void setDescripcion(String descripcion) {
+          this.descripcion = descripcion;
+      }
+  
+      public Boolean getEstado() {
+          return estado;
+      }
+  
+      public void setEstado(Boolean estado) {
+          this.estado = estado;
+      }
+  
+  
+      public List<Producto> getProductos() {
+          return productos;
+      }
+  
+      public void setProductos(List<Producto> productos) {
+          this.productos = productos;
+      }
+  }
+  ```
+
+  table = "Compras"
+
+  ```java
+  package com.example.demo.persistence.entity;
+  
+  import javax.persistence.*;
+  import java.time.LocalDateTime;
+  import java.util.List;
+  
+  
+  @Entity
+  @Table(name = "compras")
+  public class Compra {
+  
+  
+      @Id
+      @GeneratedValue(strategy = GenerationType.IDENTITY)
+      @Column(name = "id_compra")
+      private Integer idCompra;
+  
+      @Column(name = "id_cliente")
+      private String idCliente;
+  
+      private LocalDateTime fecha;
+  
+      @Column(name = "medio_pago")
+      private String medioPago;
+  
+      private String comentario;
+  
+      private String estado;
+  
+  
+  
+      @ManyToOne
+      @JoinColumn(name = "id_cliente", insertable = false, updatable = false)
+      private Cliente cliente;
+  
+      @OneToMany(mappedBy="producto")
+      private List<ComprasProducto> productos;
+  
+      public Integer getIdCompra() {
+          return idCompra;
+      }
+  
+      public void setIdCompra(Integer idCompra) {
+          this.idCompra = idCompra;
+      }
+  
+      public String getIdCliente() {
+          return idCliente;
+      }
+  
+      public void setIdCliente(String idCliente) {
+          this.idCliente = idCliente;
+      }
+  
+      public LocalDateTime getFecha() {
+          return fecha;
+      }
+  
+      public void setFecha(LocalDateTime fecha) {
+          this.fecha = fecha;
+      }
+  
+      public String getMedioPago() {
+          return medioPago;
+      }
+  
+      public void setMedioPago(String medioPago) {
+          this.medioPago = medioPago;
+      }
+  
+      public String getComentario() {
+          return comentario;
+      }
+  
+      public void setComentario(String comentario) {
+          this.comentario = comentario;
+      }
+  
+      public String getEstado() {
+          return estado;
+      }
+  
+      public void setEstado(String estado) {
+          this.estado = estado;
+      }
+  }
+  ```
+  
+  table="Cliente"
+  
+  ```java
+  package com.example.demo.persistence.entity;
+  
+  import javax.persistence.*;
+  import java.util.List;
+  
+  @Entity
+  @Table(name = "clientes")
+  public class Cliente {
+  
+      @Id
+      private String id;
+  
+      private String nombre;
+  
+      private String apellidos;
+  
+      private Long celular;
+  
+      private String direccion;
+  
+      private String correo_electronico;
+  
+      @OneToMany(mappedBy = "cliente")
+      private List<Compra> compras;
+  
+  
+      public String getId() {
+          return id;
+      }
+  
+      public void setId(String id) {
+          this.id = id;
+      }
+  
+      public String getNombre() {
+          return nombre;
+      }
+  
+      public void setNombre(String nombre) {
+          this.nombre = nombre;
+      }
+  
+      public String getApellidos() {
+          return apellidos;
+      }
+  
+      public void setApellidos(String apellidos) {
+          this.apellidos = apellidos;
+      }
+  
+      public Long getCelular() {
+          return celular;
+      }
+  
+      public void setCelular(Long celular) {
+          this.celular = celular;
+      }
+  
+      public String getDireccion() {
+          return direccion;
+      }
+  
+      public void setDireccion(String direccion) {
+          this.direccion = direccion;
+      }
+  
+      public String getCorreo_electronico() {
+          return correo_electronico;
+      }
+  
+      public void setCorreo_electronico(String correo_electronico) {
+          this.correo_electronico = correo_electronico;
+      }
+  }
+  ```
+  
+  **table with compose primary key**
+  
+- table = "compras_productos"
+
+  ```java
+  package com.example.demo.persistence.entity;
+  
+  import javax.persistence.*;
+  
+  @Entity
+  @Table(name = "compras_productos")
+  public class ComprasProducto {
+  
+      @EmbeddedId  // compound key
+      private ComprasProductoPK id;
+  
+      private Integer cantidad;
+  
+      private Double total;
+  
+      private Boolean estado;
+  
+      @ManyToOne
+      @JoinColumn(name = "id_compra", insertable = false, updatable = false)
+      private Compra compra;
+  
+      @ManyToOne
+      @JoinColumn(name = "id_producto", insertable = false, updatable = false)
+      private Producto producto;
+  
+      public ComprasProductoPK getId() {
+          return id;
+      }
+  
+      public void setId(ComprasProductoPK id) {
+          this.id = id;
+      }
+  
+      public Integer getCantidad() {
+          return cantidad;
+      }
+  
+      public void setCantidad(Integer cantidad) {
+          this.cantidad = cantidad;
+      }
+  
+      public Double getTotal() {
+          return total;
+      }
+  
+      public void setTotal(Double total) {
+          this.total = total;
+      }
+  
+      public Boolean getEstado() {
+          return estado;
+      }
+  
+      public void setEstado(Boolean estado) {
+          this.estado = estado;
+      }
+  }
+  
+  ```
+
+  When you have a table in which your primary key is composed, you must make a separate class that contains the attributes that make up the key
+
+  ```java
+  package com.example.demo.persistence.entity;
+  
+  import javax.persistence.Column;
+  import javax.persistence.Embeddable;
+  import java.io.Serializable;
+  
+  @Embeddable  //Defines a class whose instances are stored as an intrinsic part of an owning entity and share the identity of the entity. Each of the persistent properties or fields of the embedded object is mapped to the database table for the entity.
+  public class ComprasProductoPK  implements Serializable {
+  
+      @Column(name="id_compra")
+      private Integer idCompra;
+  
+      @Column(name="id_producto")
+      private Integer idProducto;
+  
+      public Integer getIdCompra() {
+          return idCompra;
+      }
+  
+      public void setIdCompra(Integer idCompra) {
+          this.idCompra = idCompra;
+      }
+  
+      public Integer getIdProducto() {
+          return idProducto;
+      }
+  
+      public void setIdProducto(Integer idProducto) {
+          this.idProducto = idProducto;
+      }
+  }
+  
+  ```
+
+  
+
+
+
+
+
+ 
+
 - Repositories
 
 **DATA BASE**
