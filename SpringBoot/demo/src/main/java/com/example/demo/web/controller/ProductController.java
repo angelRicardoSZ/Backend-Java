@@ -8,8 +8,7 @@ import com.example.demo.domain.service.ProductService;
 
 //Spring framework
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 // utils
 import java.util.List;
@@ -22,23 +21,28 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+    @GetMapping("/all")
     public List<Product> getAll() {
         return productService.getAll();
     }
 
-    public Optional<Product> getProduct(int productId){
+    @GetMapping("/{productId}")
+    public Optional<Product> getProduct(@PathVariable("productId") int productId){
         return productService.getProduct(productId);
     }
 
-    public Optional<List<Product>> getByCategory(int categoryId){
+    @GetMapping("/category/{categoryId}")
+    public Optional<List<Product>> getByCategory(@PathVariable("categoryId") int categoryId){
         return productService.getByCategory(categoryId);
     }
 
-    public Product save(Product product){
+    @PostMapping("/save")
+    public Product save(@RequestBody Product product){
         return productService.save(product);
     }
 
-    public boolean delete(int productId){
+    @DeleteMapping("/delete/{id}")
+    public boolean delete(@PathVariable("id") int productId){
         return productService.delete(productId);
     }
 
