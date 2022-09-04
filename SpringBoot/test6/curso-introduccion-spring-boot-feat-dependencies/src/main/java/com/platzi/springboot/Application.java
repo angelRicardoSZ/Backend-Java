@@ -5,6 +5,7 @@ import com.platzi.springboot.bean.MyBean;
 import com.platzi.springboot.bean.MyBeanWithDependency;
 import com.platzi.springboot.bean.MyBeanWithProperties;
 import com.platzi.springboot.component.ComponentDependency;
+import com.platzi.springboot.pojo.UserPojo;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -19,12 +20,14 @@ public class Application implements CommandLineRunner {
 
     private MyBeanWithDependency myBeanWithDependency;
     private MyBeanWithProperties myBeanWithProperties;
+    private UserPojo userPojo;
 
-    public Application(@Qualifier("componentTwoImplement") ComponentDependency componentDependency, MyBean myBean, MyBeanWithDependency myBeanWithDependency, MyBeanWithProperties myBeanWithProperties){
+    public Application(@Qualifier("componentTwoImplement") ComponentDependency componentDependency, MyBean myBean, MyBeanWithDependency myBeanWithDependency, MyBeanWithProperties myBeanWithProperties, UserPojo userPojo){
         this.componentDependency = componentDependency;
         this.myBean = myBean;
         this.myBeanWithDependency = myBeanWithDependency;
         this.myBeanWithProperties = myBeanWithProperties;
+        this.userPojo = userPojo;
     }
 
     public static void main(String[] args) {
@@ -37,8 +40,9 @@ public class Application implements CommandLineRunner {
         componentDependency.saludar();
         myBean.print();
         myBeanWithDependency.printWithDependency();
-        System.out.println(myBeanWithProperties.function());;
-    }
+        System.out.println(myBeanWithProperties.function());
+        System.out.println(userPojo.getEmail() + "-" + userPojo.getPassword());
+        }
 
 
 
