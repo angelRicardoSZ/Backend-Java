@@ -3,6 +3,7 @@ package com.platzi.springboot;
 
 import com.platzi.springboot.bean.MyBean;
 import com.platzi.springboot.bean.MyBeanWithDependency;
+import com.platzi.springboot.bean.MyBeanWithProperties;
 import com.platzi.springboot.component.ComponentDependency;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
@@ -17,11 +18,13 @@ public class Application implements CommandLineRunner {
     private MyBean myBean;
 
     private MyBeanWithDependency myBeanWithDependency;
+    private MyBeanWithProperties myBeanWithProperties;
 
-    public Application(@Qualifier("componentTwoImplement") ComponentDependency componentDependency, MyBean myBean, MyBeanWithDependency myBeanWithDependency){
+    public Application(@Qualifier("componentTwoImplement") ComponentDependency componentDependency, MyBean myBean, MyBeanWithDependency myBeanWithDependency, MyBeanWithProperties myBeanWithProperties){
         this.componentDependency = componentDependency;
         this.myBean = myBean;
         this.myBeanWithDependency = myBeanWithDependency;
+        this.myBeanWithProperties = myBeanWithProperties;
     }
 
     public static void main(String[] args) {
@@ -34,7 +37,10 @@ public class Application implements CommandLineRunner {
         componentDependency.saludar();
         myBean.print();
         myBeanWithDependency.printWithDependency();
+        System.out.println(myBeanWithProperties.function());;
     }
+
+
 
 
 }
