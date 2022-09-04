@@ -6,6 +6,8 @@ import com.platzi.springboot.bean.MyBeanWithDependency;
 import com.platzi.springboot.bean.MyBeanWithProperties;
 import com.platzi.springboot.component.ComponentDependency;
 import com.platzi.springboot.pojo.UserPojo;
+import org.apache.juli.logging.Log;
+import org.apache.juli.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -14,6 +16,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class Application implements CommandLineRunner {
 
+    private final Log LOGGER = LogFactory.getLog(Application.class);
     private ComponentDependency componentDependency;
 
     private MyBean myBean;
@@ -42,6 +45,15 @@ public class Application implements CommandLineRunner {
         myBeanWithDependency.printWithDependency();
         System.out.println(myBeanWithProperties.function());
         System.out.println(userPojo.getEmail() + "-" + userPojo.getPassword());
+
+        /*try{
+            int value = 10/0;
+            LOGGER.info("Mi valor:  " + value);
+        } catch (Exception e) {
+            LOGGER.error("error 10/0" + e.getMessage());
+
+        }*/
+
         }
 
 
