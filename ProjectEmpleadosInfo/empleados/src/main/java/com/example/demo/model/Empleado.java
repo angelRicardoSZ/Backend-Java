@@ -38,7 +38,11 @@ public class Empleado {
     
     @Column(name = "clave_interbancaria")
     private Integer claveInterbancaria;
-
+    
+    
+    public Empleado() {
+    	
+    }
 
 	public Integer getIdEmpleado() {
 		return idEmpleado;
