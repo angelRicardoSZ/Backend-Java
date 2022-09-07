@@ -11,12 +11,12 @@ import javax.persistence.Table;
 @Table(name="info")
 public class Empleado {
 	@Id  // simple primary key
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // java generate automatic id
+    @GeneratedValue(strategy = GenerationType.AUTO) // java generate automatic id
     @Column(name = "id_empleado")
     private Integer idEmpleado;
 	
-    @Column(name = "numero_empleado")
-    private Integer numeroEmpleado;
+    @Column(name = "primer_nombre")
+    private String nombresEmpleado;
     
     @Column(name = "primer_apellido")
     private String primerApellido;
@@ -34,6 +34,9 @@ public class Empleado {
     private String centro;
     
     private String puesto;
+    
+    
+
     
     
     @Column(name = "clave_interbancaria")

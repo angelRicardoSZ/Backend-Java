@@ -20,6 +20,10 @@ public class EmpleadoService implements EmpleadoRepository{
 	
 	@Autowired
 	private EmpleadoRepository empleadoRepository;
+	
+	public Optional<Empleado> findById(int id) {
+		return empleadoRepository.findById(id);
+	}
 
 	@Override
 	public List<Empleado> findAll() {
@@ -120,7 +124,7 @@ public class EmpleadoService implements EmpleadoRepository{
 	@Override
 	public <S extends Empleado> S save(S entity) {
 		// TODO Auto-generated method stub
-		return null;
+		return empleadoRepository.save(entity);
 	}
 
 	@Override
